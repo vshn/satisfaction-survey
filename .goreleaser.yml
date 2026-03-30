@@ -23,6 +23,8 @@ snapshot:
 
 dockers:
 - goarch: amd64
+  extra_files:
+  - static/index.html
   use: buildx
   build_flag_templates:
   - "--platform=linux/amd64"
@@ -30,6 +32,8 @@ dockers:
   - "{{ .Env.REGISTRY }}/{{ .Env.IMAGE_NAME }}:v{{ .Version }}-amd64"
 
 - goarch: arm64
+  extra_files:
+  - static/index.html
   use: buildx
   build_flag_templates:
     - "--platform=linux/arm64/v8"

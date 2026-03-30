@@ -17,11 +17,11 @@ import (
 )
 
 type ApiServerConfig struct {
-	AuthUser string
-	AuthPass string
+	AuthUser    string
+	AuthPass    string
 	AuthDisable bool
-	Port     int
-	Host     string
+	Port        int
+	Host        string
 
 	Logger *logr.Logger
 }
