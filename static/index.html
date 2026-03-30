@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <title>The Satisfaction Survey</title>
+        <script type="text/javascript">
+            async function doPositive() {
+                await fetch("/yay", {
+                    method: "POST"
+                }).then(reveal());
+            }
+            async function doNegative() {
+                await fetch("/urgh", {
+                    method: "POST"
+                }).then(reveal());
+            }
+
+            function reveal() {
+                document.getElementById("buttonpanel").style = "visibility: hidden"
+                document.getElementById("thankyou").style = ""
+            }
+        </script>
+        <style>
+            :root {
+                --shadow1: #fe933b;
+                --shadow2: #9affe2;
+            }
+            div#content {
+                margin: auto;
+                margin-top: 5em;
+                max-width: 400px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            div#buttonpanel {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+
+            div#buttonpanel button {
+                border-radius: 5px;
+                width: 100px;
+                height: 100px;
+                font-weight: bold;
+            }
+
+            div#thankyou {
+                font-size: 3em;
+                font-family: sans-serif;
+                font-weight: bold;
+                text-shadow: 5px 5px 0 var(--shadow1), 10px 10px 0 var(--shadow2);
+                animation: shadow-dance 2s infinite;
+            }
+
+            @keyframes shadow-dance {
+                0%, 100% {
+                    text-shadow: 5px 5px 0 var(--shadow1), 10px 10px 0 var(--shadow2);
+                }
+                50% {
+                    text-shadow: -5px -5px 0 var(--shadow1), -10px -10px 0 var(--shadow2);
+                }
+            }
+            #positive {
+                background-color: #80cf5f;
+            }
+            #negative {
+                background-color: #d64a4a;
+            }
+            #positive:hover {
+                background-color: #5c9b42;
+            }
+            #negative:hover {
+                background-color: #ae4646;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="content">
+            <div id="buttonpanel">
+                <div>
+                    <button id="positive" onclick="doPositive()">YAY</button>
+                </div>
+                <div>
+                    <button id="negative" onclick="doNegative()">URGH</button>
+                </div>
+            </div>
+            <div id="thankyou" style="visibility: hidden">
+                <p>Thank you for expressing your opinion 😘</p>
+            </div>
+        </div>
+    </body>
+</html>
