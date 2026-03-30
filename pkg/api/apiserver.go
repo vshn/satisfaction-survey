@@ -19,6 +19,7 @@ import (
 type ApiServerConfig struct {
 	AuthUser string
 	AuthPass string
+	AuthDisable bool
 	Port     int
 	Host     string
 
@@ -66,7 +67,7 @@ func (s *ApiServer) Stop(ctx context.Context) error {
 	return s.server.Shutdown(ctx)
 }
 
-func (s *ApiServer) logInject(next http.Handler) http.HandlerFunc {
+func (s *ApiServer) logInject(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		logger := s.config.Logger.WithValues(
 			"method", r.Method, "url", r.URL.String(), "remote", r.RemoteAddr,
@@ -78,7 +79,10 @@ func (s *ApiServer) logInject(next http.Handler) http.HandlerFunc {
 	})
 }
 
-func (s *ApiServer) basicAuth(next http.Handler) http.HandlerFunc {
+func (s *ApiServer) basicAuth(next http.Handler) http.Handler {
+	if s.config.AuthDisable {
+		return next
+	}
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		username, password, ok := r.BasicAuth()
 		if ok {

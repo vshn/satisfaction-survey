@@ -24,7 +24,6 @@ type prometheusConfig struct {
 var (
 	serverCommandName = "serve"
 	serverConfig      = api.ApiServerConfig{}
-	promConfig        = prometheusConfig{Headers: map[string]string{}}
 	servePath         string
 	serveCmd          = &cobra.Command{
 		Use:   serverCommandName,
@@ -80,6 +79,7 @@ func (h headerInjector) RoundTrip(req *http.Request) (*http.Response, error) {
 func init() {
 	serveCmd.Flags().StringVar(&serverConfig.AuthUser, "auth-user", "admin", "Username for authenticating with the API")
 	serveCmd.Flags().StringVar(&serverConfig.AuthPass, "auth-pass", "", "Password for authenticating with the API")
+	serveCmd.Flags().BoolVar(&serverConfig.AuthDisable, "auth-disable", false, "Set to disable HTTP basic auth")
 	serveCmd.Flags().IntVar(&serverConfig.Port, "port", 8080, "Port at which to serve API")
 	serveCmd.Flags().StringVar(&serverConfig.Host, "host", "0.0.0.0", "Host address to bind")
 	serveCmd.Flags().StringVar(&servePath, "path", "./static", "Path from which to serve static files")
