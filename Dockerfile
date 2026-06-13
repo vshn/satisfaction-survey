@@ -1,4 +1,4 @@
-FROM docker.io/library/alpine:3.23 AS runtime
+FROM docker.io/library/alpine:3.24 AS runtime
 
 RUN \
   apk add --update --no-cache \
